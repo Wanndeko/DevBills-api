@@ -6,8 +6,8 @@ services:
     restart: always
     image: mongo
     environment:
-       MONGO_INITDB_ROOT_USERNAME: 'devbills'
-       MONGO_INITDB_ROOT_PASSWORD: 'pass123'
+      MONGO_INITDB_ROOT_USERNAME: 'devbills'
+      MONGO_INITDB_ROOT_PASSWORD: 'pass123'
     ports:
       - '27017:27017'
     networks:
