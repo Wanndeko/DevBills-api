@@ -3,7 +3,7 @@ import { CategoriesService } from "../services/categories.service";
 import { CategoriesRepository } from "../database/repositories/categories.repository";
 import { CategoryModel } from "../database/schemas/category.schema";
 import { CreateCategoryDTO } from "../dtos/categories.dto";
-import { z } from "zod";
+import { StatusCodes } from "http-status-codes";
 
 export class CategoriesController{
     async create(
@@ -13,19 +13,12 @@ export class CategoriesController{
         )
         {
         try {    
-            const validateSchema = z.object({
-                title: z.string(),
-                color: z.string().regex(/^#[A-Fa-f0-9]{6}$/)
-            })
-            
-            validateSchema.parse(request.body)
-
             const {title, color} = request.body
                 
             const repository  =  new CategoriesRepository(CategoryModel)
             const service = new CategoriesService(repository)
             const result = await service.create({title, color})
-            return response.status(201).json(result)
+            return response.status(StatusCodes.CREATED).json(result)
         } 
         catch (error) {
             next(error)
