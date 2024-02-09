@@ -24,4 +24,17 @@ export class CategoriesController{
             next(error)
             }
     }
+
+    async index(request: Request, response: Response, next: NextFunction)
+        {
+        try {      
+            const repository  =  new CategoriesRepository(CategoryModel)
+            const service = new CategoriesService(repository)
+            const result = await service.index()
+            return response.status(StatusCodes.OK).json(result)
+        } 
+        catch (error) {
+            next(error)
+            }
+    }
 }
