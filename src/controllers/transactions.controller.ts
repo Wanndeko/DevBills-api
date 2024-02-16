@@ -24,6 +24,21 @@ export class TransactionsController{
             }
     }
 
+     index = async(
+        request: Request,
+        response: Response,
+        next: NextFunction
+        )=>{
+        try {    
+            const result = await this.transactionService.index()
+
+            return response.status(StatusCodes.OK).json(result)
+        } 
+        catch (error) {
+            next(error)
+            }
+    }
+
    
     
 }
