@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 
 import { StatusCodes } from "http-status-codes";
 import { TransactionService } from "../services/transactions.service";
-import { CreateTransactionDto } from "../dtos/transactions.dto";
+import { CreateTransactionDto, IndexTransactionsDto } from "../dtos/transactions.dto";
 
 export class TransactionsController{
     constructor(private transactionService: TransactionService){}
@@ -25,12 +25,14 @@ export class TransactionsController{
     }
 
      index = async(
-        request: Request,
+        request: Request<unknown, unknown, unknown, IndexTransactionsDto>,
         response: Response,
         next: NextFunction
         )=>{
         try {    
-            const result = await this.transactionService.index()
+            const {title, categoryId, beginDate, endDate} = request.query
+
+            const result = await this.transactionService.index({title, categoryId, beginDate, endDate})
 
             return response.status(StatusCodes.OK).json(result)
         } 
