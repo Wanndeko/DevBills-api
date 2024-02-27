@@ -1,8 +1,9 @@
 import { Router } from "express"
 import { TransactionsController } from "../controllers/transactions.controller"
 import { TransactionsFactory } from "../factories/transactions.factory"
-import { createTransactionsSchema } from "../dtos/transactions.dto"
+import { createTransactionsSchema, getDashBoardSchema, indexTransactionsSchema } from "../dtos/transactions.dto"
 import { ParamsType, validator } from "../middlewares/validator.middleware"
+import { Query } from "mongoose"
 
 
 
@@ -15,4 +16,12 @@ transactionsRoutes.post('/', validator({
     type: ParamsType.BODY   
 }), controller.create)  
 
-transactionsRoutes.get('/', controller.index)
+transactionsRoutes.get('/', validator({
+    schema:indexTransactionsSchema,
+    type: ParamsType.QUERY
+}), controller.index)
+
+transactionsRoutes.get('/dashboard', validator({
+    schema: getDashBoardSchema,
+    type: ParamsType.QUERY
+}), controller.getDashBoard)

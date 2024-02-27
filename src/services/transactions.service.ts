@@ -1,9 +1,10 @@
 import { StatusCodes } from "http-status-codes";
 import { CategoriesRepository } from "../database/repositories/categories.repository";
 import { TransactionsRepository } from "../database/repositories/transactions.repostirory";
-import { CreateTransactionDto, IndexTransactionsDto } from "../dtos/transactions.dto";
+import { CreateTransactionDto, GetDashBoardDto, IndexTransactionsDto } from "../dtos/transactions.dto";
 import { Transaction } from "../entities/transactions.entity";
 import { AppError } from "../errors/app.error";
+import { Balance } from "../entities/balance.entity";
 
 
 
@@ -41,6 +42,22 @@ export class TransactionService{
     async index(filters: IndexTransactionsDto): Promise<Transaction[]>{
         const transactions = await this.transactionsRepository.index(filters)
         return transactions
+    }
+
+    async getDashBoard({beginDate, endDate}: GetDashBoardDto){
+        let balance = await this.transactionsRepository.getBalance({
+            beginDate,
+            endDate
+        })
+        if(!balance){
+            balance = new Balance({
+                _id: null,
+                incomes: 0,
+                expenses: 0,
+                balance: 0
+            })
+        }
+        return balance
     }
 
 }
