@@ -1,10 +1,12 @@
 import { StatusCodes } from "http-status-codes";
 import { CategoriesRepository } from "../database/repositories/categories.repository";
 import { TransactionsRepository } from "../database/repositories/transactions.repostirory";
-import { CreateTransactionDto, GetDashBoardDto, IndexTransactionsDto } from "../dtos/transactions.dto";
+import { CreateTransactionDto, GetDashBoardDto, GetFinancialEvolutionDto, IndexTransactionsDto } from "../dtos/transactions.dto";
 import { Transaction } from "../entities/transactions.entity";
 import { AppError } from "../errors/app.error";
 import { Balance } from "../entities/balance.entity";
+import { Expense } from "../entities/expense.entity";
+import { promise } from "zod";
 
 
 
@@ -44,11 +46,19 @@ export class TransactionService{
         return transactions
     }
 
-    async getDashBoard({beginDate, endDate}: GetDashBoardDto){
-        let balance = await this.transactionsRepository.getBalance({
-            beginDate,
-            endDate
-        })
+    async getDashBoard({beginDate, endDate}: GetDashBoardDto): Promise<{balance: Balance, expenses: Expense[]}>{
+        let [balance, expenses]= await Promise.all([
+            this.transactionsRepository.getBalance({
+                beginDate,
+                endDate
+            }),
+            this.transactionsRepository.getExpenses({
+                beginDate,
+                endDate
+            }) 
+        ])
+       
+
         if(!balance){
             balance = new Balance({
                 _id: null,
@@ -57,7 +67,13 @@ export class TransactionService{
                 balance: 0
             })
         }
-        return balance
+        return {balance, expenses}
+    }
+
+    async getFinancialEvolution({year}:GetFinancialEvolutionDto):Promise<Balance[]>{
+        const financialEvolution = await this.transactionsRepository.getFinancialEvolution({year})
+
+        return financialEvolution
     }
 
 }

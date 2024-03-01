@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 
 import { StatusCodes } from "http-status-codes";
 import { TransactionService } from "../services/transactions.service";
-import { CreateTransactionDto, GetDashBoardDto, IndexTransactionsDto } from "../dtos/transactions.dto";
+import { CreateTransactionDto, GetDashBoardDto, GetFinancialEvolutionDto, IndexTransactionsDto } from "../dtos/transactions.dto";
 
 export class TransactionsController{
     constructor(private transactionService: TransactionService){}
@@ -46,16 +46,33 @@ export class TransactionsController{
     response: Response,
     next: NextFunction
     )=>{
-    try {    
-        const { beginDate, endDate} = request.query
+        try {    
+            const { beginDate, endDate} = request.query
 
-        const result = await this.transactionService.getDashBoard({ beginDate, endDate})
+            const result = await this.transactionService.getDashBoard({ beginDate, endDate})
 
-        return response.status(StatusCodes.OK).json(result)
-    } 
-    catch (error) {
-        next(error)
+            return response.status(StatusCodes.OK).json(result)
+        }    
+        catch (error) {
+            next(error)
         }
-}
+    }  
+
+   getFinancialEvolution = async(
+    request: Request<unknown, unknown, unknown, GetFinancialEvolutionDto>,
+    response: Response,
+    next: NextFunction
+    )=>{
+        try {    
+            const {year} = request.query
+
+            const result = await this.transactionService.getFinancialEvolution({ year})
+
+            return response.status(StatusCodes.OK).json(result)
+        }    
+        catch (error) {
+            next(error)
+        }
+    }  
     
 }
