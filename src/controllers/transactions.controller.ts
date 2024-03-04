@@ -3,12 +3,13 @@ import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { TransactionService } from "../services/transactions.service";
 import { CreateTransactionDto, GetDashBoardDto, GetFinancialEvolutionDto, IndexTransactionsDto } from "../dtos/transactions.dto";
+import { BodyRequest, QueryRequest } from "./types";
 
 export class TransactionsController{
     constructor(private transactionService: TransactionService){}
 
      create = async(
-        request: Request<unknown, unknown, CreateTransactionDto>,
+        request: BodyRequest< CreateTransactionDto>,
         response: Response,
         next: NextFunction
         )=>{
@@ -25,7 +26,7 @@ export class TransactionsController{
     }
 
      index = async(
-        request: Request<unknown, unknown, unknown, IndexTransactionsDto>,
+        request: QueryRequest< IndexTransactionsDto>,
         response: Response,
         next: NextFunction
         )=>{
@@ -42,7 +43,7 @@ export class TransactionsController{
     }
 
    getDashBoard = async(
-    request: Request<unknown, unknown, unknown, GetDashBoardDto>,
+    request: QueryRequest< GetDashBoardDto>,
     response: Response,
     next: NextFunction
     )=>{
@@ -59,7 +60,7 @@ export class TransactionsController{
     }  
 
    getFinancialEvolution = async(
-    request: Request<unknown, unknown, unknown, GetFinancialEvolutionDto>,
+    request: QueryRequest< GetFinancialEvolutionDto>,
     response: Response,
     next: NextFunction
     )=>{

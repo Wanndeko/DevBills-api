@@ -70,7 +70,7 @@ export class TransactionService{
         return {balance, expenses}
     }
 
-    async getFinancialEvolution({year}:GetFinancialEvolutionDto):Promise<Balance[]>{
+    async getFinancialEvolution({year}:GetFinancialEvolutionDto): Promise<Balance[]>{
         const financialEvolution = await this.transactionsRepository.getFinancialEvolution({year})
 
         return financialEvolution
