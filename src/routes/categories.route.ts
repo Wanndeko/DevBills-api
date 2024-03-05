@@ -1,9 +1,9 @@
-import { Router } from "express"
+import { Router } from 'express'
 
-import { CategoriesController } from "../controllers/categories.controller"
-import { ParamsType, validator } from "../middlewares/validator.middleware"
-import { createCategorySchema } from "../dtos/categories.dto"
-import { CategoriesFactory } from "../factories/categories.factory"
+import { CategoriesController } from '../controllers/categories.controller'
+import { createCategorySchema } from '../dtos/categories.dto'
+import { CategoriesFactory } from '../factories/categories.factory'
+import { ParamsType, validator } from '../middlewares/validator.middleware'
 
 export const categoriesRoutes = Router()
 
@@ -11,7 +11,11 @@ const controller = new CategoriesController(CategoriesFactory.getServiceInstance
 
 categoriesRoutes.get('/', controller.index)
 
-categoriesRoutes.post('/', validator({
+categoriesRoutes.post(
+  '/',
+  validator({
     schema: createCategorySchema,
     type: ParamsType.BODY
-}), controller.create)
+  }),
+  controller.create
+)

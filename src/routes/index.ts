@@ -1,10 +1,10 @@
-import { Router } from "express";
+import { Router } from 'express'
 
-import { baseRoutes } from "./base.route";
-import { categoriesRoutes } from "./categories.route";
-import { transactionsRoutes } from "./transactions.route";
+import { baseRoutes } from './base.route'
+import { categoriesRoutes } from './categories.route'
+import { transactionsRoutes } from './transactions.route'
 
-export const routes =Router()
+export const routes = Router()
 
 routes.use('/', baseRoutes)
 routes.use('/categories', categoriesRoutes)

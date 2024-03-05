@@ -1,32 +1,52 @@
-import { Router } from "express"
-import { TransactionsController } from "../controllers/transactions.controller"
-import { TransactionsFactory } from "../factories/transactions.factory"
-import { createTransactionsSchema, getDashBoardSchema, getFinancialEvolutionSchema, indexTransactionsSchema } from "../dtos/transactions.dto"
-import { ParamsType, validator } from "../middlewares/validator.middleware"
-import { Query } from "mongoose"
+import { Router } from 'express'
+import { Query } from 'mongoose'
 
-
+import { TransactionsController } from '../controllers/transactions.controller'
+import {
+  createTransactionsSchema,
+  getDashBoardSchema,
+  getFinancialEvolutionSchema,
+  indexTransactionsSchema
+} from '../dtos/transactions.dto'
+import { TransactionsFactory } from '../factories/transactions.factory'
+import { ParamsType, validator } from '../middlewares/validator.middleware'
 
 export const transactionsRoutes = Router()
 
 const controller = new TransactionsController(TransactionsFactory.getServiceInstance())
 
-transactionsRoutes.post('/', validator({
+transactionsRoutes.post(
+  '/',
+  validator({
     schema: createTransactionsSchema,
-    type: ParamsType.BODY   
-}), controller.create)  
+    type: ParamsType.BODY
+  }),
+  controller.create
+)
 
-transactionsRoutes.get('/', validator({
-    schema:indexTransactionsSchema,
+transactionsRoutes.get(
+  '/',
+  validator({
+    schema: indexTransactionsSchema,
     type: ParamsType.QUERY
-}), controller.index)
+  }),
+  controller.index
+)
 
-transactionsRoutes.get('/dashboard', validator({
+transactionsRoutes.get(
+  '/dashboard',
+  validator({
     schema: getDashBoardSchema,
     type: ParamsType.QUERY
-}), controller.getDashBoard)
+  }),
+  controller.getDashBoard
+)
 
-transactionsRoutes.get('/financial-evolution', validator({
+transactionsRoutes.get(
+  '/financial-evolution',
+  validator({
     schema: getFinancialEvolutionSchema,
     type: ParamsType.QUERY
-}), controller.getFinancialEvolution)
+  }),
+  controller.getFinancialEvolution
+)
