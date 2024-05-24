@@ -310,9 +310,10 @@ Ex:
 ```
 
 <h2>Executando na Maquina</h2>
-<p>Para executar este projeto basta abrir o terminal e digitar git clone copiar e colar o link (https://github.com/Wanndeko/back-end-hamburguer.git) e teclar enter.
+
+<p>Para executar este projeto basta abrir o terminal e digitar git clone copiar e colar o link (https://github.com/Wanndeko/DevBills-api.git) e teclar enter.
  Com o projeto aberto, no terminal do editor de codigo, digite npm install para instalar as dependencias,
-  com tudo pronto digite npm run dev e se tudo ocorrer bem ira aparecer a  mensagem 💻servidor on na porta 3002</p>
+  com tudo pronto digite npm run dev e se tudo ocorrer bem ira aparecer a  mensagem 🚀 app is running at port 3333 </p>
 
 
 
