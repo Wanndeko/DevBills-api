@@ -13,14 +13,15 @@
 </ul>
 
 <h2>Descrição📃</h2>
-<p>Este projeto consiste em uma API-rest feita em Typescript, que em conjunto com o o front se torna um software de gestão financeira.
+<p>Este projeto consiste em uma API-rest feita em Typescript, que em conjunto com o o <a href="https://github.com/Wanndeko/DevBills-front">front</a> se torna um software de gestão financeira.
 Dev-Bills entrega o controle de suas finanças durante o ano, podendo executar filtragens por periodo ou  titulos.</p>
 
 <h2>utilização🛠️</h2>
 
-get => "/" retorna um json do packageJson com status 200 e informações sobre autor e etc.
+### Obeservação => Informações abaixo são de exemplo de como a api funciona.
+
+get => "/" 
 ```javascript
-Ex:
 {
  "name": "devbills",
  "version": "1.0.0",
@@ -32,8 +33,8 @@ Ex:
   }
 } 
 ```
+get => "/categories" 
 
-get => "/categories" rota que lista todas as categorias. Retorna um json com  _id, title, color. ex:
 ```javascript
 {
  "_id": "66212363529bed0c31ecad16",
@@ -42,17 +43,18 @@ get => "/categories" rota que lista todas as categorias. Retorna um json com  _i
 },
 ```
 
-post => "/categories" recebe dois bodyparams
+post => "/categories" 
+
+
 ```javascript
- title, color. o parametro color possuo uma verificação para que só seja aceito no formato hexadecimal.
- retorna o codigo 201 junto das informações criadas e um id unico feito pelo banco dados mongoDB.
-Ex de informaçõoes recebidas:
 {
  "title": "Lucro-mensal",
  "color": "#33ffbb"
 }
+```
 
-retorno:
+>reponse => retorna as informações que foram inseridas no banco de dados após a conclusão do processo
+```javascript
 {
  "title": "Lucro-mensal",
  "color": "#33FFBB",
@@ -60,11 +62,9 @@ retorno:
 }
 ```
 
-post => "/transactions" recebe 5 informações
-bodyparams. retorna status code 201 com um id que é o id da categoria selecionada ao criar a transação.
-o dado type só aceita dois valores, income ou exepense.
-```javascript
+post => "/transactions" 
 
+```javascript
 {
  "title": "lucro-fev",
  "amount": 1000000,
@@ -74,8 +74,7 @@ o dado type só aceita dois valores, income ou exepense.
 }
 ```
 
-get => "/transactions" retorna todas as transações, aceita queryparams. Datas de inicio e fim para um filtro de periodo.]
-Ex sem filtro:
+get => "/transactions" 
 ```javascript
 [
   {
@@ -201,8 +200,7 @@ Ex sem filtro:
 ]
 ```
 
-Ex: com filtro beginDate, endDate:.
-
+ com os parametros beginDate, endDate:
 ```javascript
 
  {
@@ -231,9 +229,8 @@ Ex: com filtro beginDate, endDate:.
  }
 ```
 
-get => "/transactions/dashboard" retorna im json com o balanço entre expenses e incomes
-tabem traz um array de expenses com com as categorias e montantes. pode tabém receber datas para filtrar as categorias por periodo 
-Ex:
+get => "/transactions/dashboard" 
+
 ```javascript
  {
    "balance": {
@@ -272,8 +269,7 @@ Ex:
 ```
 
 get => "/transactions/financial-evolution"
-recebe como parametro ano, traz um json com as informações de balanço sobre gastos e receitas durante o ano enviado.
-Ex:
+
 ```javascript
  [
    {
@@ -310,13 +306,22 @@ Ex:
 ```
 
 <h2>Executando na Maquina</h2>
+<p>Para rodar este projeto é necessario node.js v18 +, mongoDB e docker/docker-compose.</p>
 
-<p>Para executar este projeto basta abrir o terminal e digitar git clone copiar e colar o link (https://github.com/Wanndeko/DevBills-api.git) e teclar enter.
- Com o projeto aberto, no terminal do editor de codigo, digite npm install para instalar as dependencias,
-  com tudo pronto digite npm run dev e se tudo ocorrer bem ira aparecer a  mensagem 🚀 app is running at port 3333 </p>
-
-
-
+```javascript
+git clone 
+https://github.com/Wanndeko/DevBills-api.git
+```
+```javascript
+npm install
+```
+```javascript
+docker-compose up -d
+```
+```javascript
+npm run dev
+```
+<p>Se tudo ocorrer bem ira aparecer a  mensagem 🚀 app is running at port 3333 </p>
 
 
 
